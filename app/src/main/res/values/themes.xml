@@ -5,5 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="BotaoAgro" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/Verde</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="Theme.AgroCalculo" parent="Base.Theme.AgroCalculo" />
 </resources>
