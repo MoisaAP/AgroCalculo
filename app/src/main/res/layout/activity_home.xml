@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo_home"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:id="@+id/textHome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Selecione"
+        android:textAlignment="center"
+        android:textColor="@color/Azul"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_sementes"
+        style="@style/BotaoAgro"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="236dp"
+        android:text="Sementes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHome" />
+
+    <Button
+        android:id="@+id/btn_fertilizantes"
+        style="@style/BotaoAgro"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:text="Fertilizantes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sementes" />
+
+    <Button
+        android:id="@+id/btn_regulagem"
+        style="@style/BotaoAgro"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:text="Regular sameadora"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_fertilizantes" />
+
+    <Button
+        android:id="@+id/btn_calc_salvos"
+        style="@style/BotaoAgro"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:text="Cálculos salvos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_regulagem" />
+</androidx.constraintlayout.widget.ConstraintLayout>
