@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_sementes" />
 
     <Button
-        android:id="@+id/btn_regulagem"
+        android:id="@+id/btn_reg_sameadeira"
         style="@style/BotaoAgro"
         android:layout_width="250dp"
         android:layout_height="70dp"
@@ -69,5 +69,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_regulagem" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_reg_sameadeira" />
 </androidx.constraintlayout.widget.ConstraintLayout>
