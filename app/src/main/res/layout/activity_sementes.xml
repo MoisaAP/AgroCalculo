@@ -14,32 +14,116 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Determinar População de Plantas"
+        android:text="Calcular População de Plantas"
         android:textAlignment="center"
-        android:textColor="@color/Azul"
+        android:textColor="@color/white"
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputSemLine"
         android:layout_width="370dp"
         android:layout_height="71dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_PopLinSem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="População linear ex: 12.5 sem/m"
+            android:inputType="number|numberDecimal"
             android:textColorHint="@color/white"
             android:textSize="16sp"
             android:visibility="visible" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputEspLinhas"
+        android:layout_width="370dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputSemLine">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_EspLinha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Espaço entre linhas ex: 45 cm"
+            android:inputType="number|numberDecimal"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputGermin"
+        android:layout_width="370dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputEspLinhas">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_PodGermi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Poder germinativo ex: 95 %"
+            android:inputType="number|numberDecimal"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_CalPopPlanta"
+        style="@style/BotaoAgro"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:text="Calcular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_PopMQuad" />
+
+    <TextView
+        android:id="@+id/Result_PopSemHa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Qauntidade de Sementes/ha"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputGermin" />
+
+    <TextView
+        android:id="@+id/result_PopMQuad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="População por m²"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Result_PopSemHa" />
 </androidx.constraintlayout.widget.ConstraintLayout>
