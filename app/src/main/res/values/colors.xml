@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="Verde">#2ECC71</color>
     <color name="Azul">#3498DB</color>
+    <color name="Cinza">#2C2C2C</color>
 </resources>
