@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fundo_regulseme"
     tools:context=".RegSameadeiraActivity">
 
     <TextView
@@ -13,12 +14,208 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Realizar Regulagem da Sameadeira"
-        android:textColor="@color/Azul"
-        android:textSize="23sp"
+        android:text="Calcular Regulagem da Sameadora"
         android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputEspLinhas"
+        android:layout_width="370dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:textColorHint="@color/white"
+        app:boxBackgroundColor="@color/Cinza"
+        app:boxStrokeColor="@color/Verde"
+        app:cursorColor="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_EspLinha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Espaço entre linhas ex: 17cm"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorLink="@color/Verde"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputQtdVoltas"
+        android:layout_width="370dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:textColorHint="@color/white"
+        app:boxBackgroundColor="@color/Cinza"
+        app:boxStrokeColor="@color/Verde"
+        app:cursorColor="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputPMS">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_QtdVoltas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantidade de voltas ex: 6 voltas"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorLink="@color/Verde"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputCircRoda"
+        android:layout_width="370dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:textColorHint="@color/white"
+        app:boxBackgroundColor="@color/Cinza"
+        app:boxStrokeColor="@color/Verde"
+        app:cursorColor="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputEspLinhas">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_CircRoda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Circunferência da roda ex: 3.86m"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorLink="@color/Verde"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPMS"
+        android:layout_width="370dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:textColorHint="@color/white"
+        app:boxBackgroundColor="@color/Cinza"
+        app:boxStrokeColor="@color/Verde"
+        app:cursorColor="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputSemLine">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_PMS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PMS ex: 28g"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorLink="@color/Verde"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputKgHa"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:textColorHint="@color/white"
+        app:boxBackgroundColor="@color/Cinza"
+        app:boxStrokeColor="@color/Verde"
+        app:cursorColor="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/textInputSemLine"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputCircRoda">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_KgHa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kg/ha ex: 160Kg"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorLink="@color/Verde"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputSemLine"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:textColorHint="@color/white"
+        app:boxBackgroundColor="@color/Cinza"
+        app:boxStrokeColor="@color/Verde"
+        app:cursorColor="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textInputKgHa"
+        app:layout_constraintTop_toBottomOf="@+id/textInputCircRoda">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_SemLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Grão/m ex: 55"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorLink="@color/Verde"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_CalRegSame"
+        style="@style/BotaoAgro"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:text="Calcular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputQtdVoltas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

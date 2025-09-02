@@ -17,7 +17,7 @@ class SementesActivity : AppCompatActivity() {
     private lateinit var editEspLinha: EditText
     private lateinit var editPodGermi: EditText
     private lateinit var editPMS: EditText
-    private lateinit var editNSemBag: EditText
+    private lateinit var editArea: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +29,16 @@ class SementesActivity : AppCompatActivity() {
         editEspLinha = findViewById(R.id.edit_EspLinha)
         editPodGermi = findViewById(R.id.edit_PodGermi)
         editPMS = findViewById(R.id.edit_PMS)
-        editNSemBag = findViewById(R.id.edit_NSemBag)
+        editArea = findViewById(R.id.edit_Area)
 
         btnCalPopPlanta.setOnClickListener {
             val popLinSem = editPopLinSem.text.toString().toDoubleOrNull()
             val espLinhaCm = editEspLinha.text.toString().toDoubleOrNull()
-            val podGermi = editPodGermi.text.toString().toDoubleOrNull()
+            var podGermi = editPodGermi.text.toString().toDoubleOrNull() ?: 100.0
             val PMS = editPMS.text.toString().toDoubleOrNull() ?: 0.0
-            val NSemBag = editNSemBag.text.toString().toDoubleOrNull() ?: 0.0
+            val area = editArea.text.toString().toDoubleOrNull() ?: 0.0
 
-            if (popLinSem != null && espLinhaCm != null && podGermi != null) {
+            if (popLinSem != null && espLinhaCm != null) {
 
                 val espLinhaM = espLinhaCm / 100.0
 
@@ -46,13 +46,13 @@ class SementesActivity : AppCompatActivity() {
 
                 val sementesHa = (popM2 * 10000) / (podGermi / 100.0)
 
-                val kgha = (PMS / 1000) * sementesHa
+                val kgha = (PMS / 1000000.0) * sementesHa
 
-                val bags = sementesHa / NSemBag
+                val semArea = sementesHa * area
 
 
-                val mensagem = "População: %.2f plantas/m²\nSementes: %.0f sementes/ha\nKg por ha: %.2f\nSacos/Bags: %.0f"
-                    .format(popM2, sementesHa, kgha, bags)
+                val mensagem = "Total Sementes: %.0f\nSementes/ha: %.0f\nPlantas/m²: %.2f\nKg/ha: %.3f"
+                    .format(semArea, sementesHa, popM2, kgha)
 
                 val dialog = MaterialAlertDialogBuilder(this)
                     .setTitle("Resultado")
