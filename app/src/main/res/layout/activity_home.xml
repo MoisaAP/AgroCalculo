@@ -16,7 +16,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Selecione"
         android:textAlignment="center"
-        android:textColor="@color/Azul"
+        android:textColor="@color/white"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -28,46 +28,47 @@
         style="@style/BotaoAgro"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="32dp"
         android:text="População de Plantas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textHome" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_pms" />
 
     <Button
-        android:id="@+id/btn_fertilizantes"
+        android:id="@+id/btn_pms"
         style="@style/BotaoAgro"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_marginTop="16dp"
-        android:text="Fertilizantes"
+        android:layout_marginTop="80dp"
+        android:text="PMS"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sementes" />
+        app:layout_constraintTop_toBottomOf="@+id/textHome" />
 
     <Button
         android:id="@+id/btn_reg_sameadeira"
         style="@style/BotaoAgro"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="Regular sameadora"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_fertilizantes" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_sementes" />
 
     <Button
         android:id="@+id/btn_calc_salvos"
         style="@style/BotaoAgro"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="Cálculos salvos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_reg_sameadeira" />
 </androidx.constraintlayout.widget.ConstraintLayout>

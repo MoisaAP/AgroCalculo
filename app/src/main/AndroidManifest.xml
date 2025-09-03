@@ -17,7 +17,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FertilizantesActivity"
+            android:name=".PmsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

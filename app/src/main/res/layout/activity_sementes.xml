@@ -8,7 +8,7 @@
     android:background="@drawable/fundo_sementes"
     tools:context=".SementesActivity">
 
-<TextView
+    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Calcular População de Plantas"
         android:textAlignment="center"
-        android:textColor="@color/Verde"
+        android:textColor="@color/white"
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
