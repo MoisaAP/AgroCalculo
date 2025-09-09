@@ -10,7 +10,44 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+import android.app.Dialog
+import android.view.LayoutInflater
+import android.view.WindowManager
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import com.google.android.material.appbar.MaterialToolbar
+
 class PmsActivity : AppCompatActivity() {
+
+    private fun showCustomDialog(title: String, message: String, buttonText: String = "Fechar") {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_pms, null, false)
+        dialog.setContentView(view)
+
+        // Escurecer o fundo
+        dialog.window?.apply {
+            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setDimAmount(0.6f) // intensidade do escurecimento
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        val tvTitle = view.findViewById<TextView>(R.id.tvDialogTitle)
+        val tvMessage = view.findViewById<TextView>(R.id.tvDialogMessage)
+        val btnOk = view.findViewById<Button>(R.id.btnDialogOk)
+
+        tvTitle.text = title
+        tvMessage.text = message
+        btnOk.text = buttonText
+
+        btnOk.setOnClickListener { dialog.dismiss() }
+
+        dialog.setCancelable(true)
+        dialog.show()
+    }
+
+
 
     private  lateinit  var btnCalcPMS: Button
     private  lateinit  var editQtdSementes: EditText
@@ -20,6 +57,20 @@ class PmsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_pms)
+
+        // ToolBar
+        window.statusBarColor = getColor(R.color.Verde)
+        val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
+        toolbar.setTitleTextAppearance(this, R.style.TitleLarge_Custom)
+        toolbar.setNavigationIconTint(ContextCompat.getColor(this, R.color.white))
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            title = "Calcular Peso de Mil Sementes"
+            setDisplayHomeAsUpEnabled(true) // mostra o botão de voltar
+            setHomeButtonEnabled(true)
+        }
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
 
         btnCalcPMS = findViewById(R.id.btn_CalcPMS)
         editQtdSementes = findViewById(R.id.edit_QtdSementes)
@@ -34,38 +85,12 @@ class PmsActivity : AppCompatActivity() {
 
                 val PMS = (1000.0 * PesoSementes) / QtdSementes
 
-                val mensagem = "PMS: %.2fg"
-                    .format(PMS)
-
-                val dialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("Resultado")
-                    .setMessage(mensagem)
-                    .setPositiveButton("Fechar", null)
-                    .show()
-
-                dialog.findViewById<TextView>(com.google.android.material.R.id.alertTitle)?.apply {
-                    textSize = 22f
-                }
-                dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                    textSize = 20f
-                }
-
+                val mensagem = "PMS: %.2fg".format(PMS)
+                showCustomDialog(title = "Resultado", message = mensagem, buttonText = "Fechar")
             } else {
-                val dialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("Atenção")
-                    .setMessage("Preencha todos os campos corretamente.")
-                    .setPositiveButton("Ok", null)
-                    .show()
-
-                dialog.findViewById<TextView>(com.google.android.material.R.id.alertTitle)?.apply {
-                    textSize = 22f
-                }
-                dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                    textSize = 18f
-                }
+                showCustomDialog(title = "Atenção", message = "Preencha todos os campos corretamente.", buttonText = "Ok")
             }
         }
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

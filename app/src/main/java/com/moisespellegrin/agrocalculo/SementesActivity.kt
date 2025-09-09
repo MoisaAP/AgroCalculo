@@ -10,7 +10,79 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+import android.app.Dialog
+import android.view.LayoutInflater
+import android.view.WindowManager
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import com.google.android.material.appbar.MaterialToolbar
+
 class SementesActivity : AppCompatActivity() {
+
+    private fun showResultadoDialog(
+        totalSementes: Double,
+        sementesHa: Double,
+        plantasM2: Double,
+        kgHa: Double
+    ) {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_sementes, null, false)
+        dialog.setContentView(view)
+
+        dialog.window?.apply {
+            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setDimAmount(0.6f)
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        view.findViewById<TextView>(R.id.tvDialogTitle).text = "Resultado"
+        view.findViewById<TextView>(R.id.tvTotalSem).text = "Total Sementes: %.0f".format(totalSementes)
+        view.findViewById<TextView>(R.id.tvSemHa).text = "Sementes/ha: %.0f".format(sementesHa)
+        view.findViewById<TextView>(R.id.tvPlantM2).text = "Plantas/m²: %.2f".format(plantasM2)
+        view.findViewById<TextView>(R.id.tvKgHa).text = "Kg/ha: %.3f".format(kgHa)
+
+        view.findViewById<Button>(R.id.btnDialogOk).setOnClickListener { dialog.dismiss() }
+
+        dialog.setCancelable(true)
+        dialog.show()
+    }
+
+    private fun showAtencaoDialog(mensagem: String) {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_sementes, null, false)
+        dialog.setContentView(view)
+
+        dialog.window?.apply {
+            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setDimAmount(0.6f)
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        view.findViewById<TextView>(R.id.tvDialogTitle).text = "Atenção"
+
+        val tvTotalSem = view.findViewById<TextView>(R.id.tvTotalSem)
+        val tvSemHa = view.findViewById<TextView>(R.id.tvSemHa)
+        val tvPlantM2 = view.findViewById<TextView>(R.id.tvPlantM2)
+        val tvKgHa = view.findViewById<TextView>(R.id.tvKgHa)
+
+        tvTotalSem.text = mensagem
+        tvTotalSem.textSize = 18f
+        tvSemHa.visibility = android.view.View.GONE
+        tvPlantM2.visibility = android.view.View.GONE
+        tvKgHa.visibility = android.view.View.GONE
+
+        val btnOk = view.findViewById<Button>(R.id.btnDialogOk)
+        btnOk.text = "Ok"
+        btnOk.setOnClickListener { dialog.dismiss() }
+
+        dialog.setCancelable(true)
+        dialog.show()
+    }
+
 
     private lateinit var btnCalPopPlanta: Button
     private lateinit var editPopLinSem: EditText
@@ -23,6 +95,20 @@ class SementesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_sementes)
+
+        // ToolBar
+        window.statusBarColor = getColor(R.color.Verde)
+        val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
+        toolbar.setTitleTextAppearance(this, R.style.TitleLarge_Custom)
+        toolbar.setNavigationIconTint(ContextCompat.getColor(this, R.color.white))
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            title = "Calcular População de Plantas"
+            setDisplayHomeAsUpEnabled(true) // mostra o botão de voltar
+            setHomeButtonEnabled(true)
+        }
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
 
         btnCalPopPlanta = findViewById(R.id.btn_CalPopPlanta)
         editPopLinSem = findViewById(R.id.edit_PopLinSem)
@@ -51,39 +137,16 @@ class SementesActivity : AppCompatActivity() {
                 val semArea = sementesHa * area
 
 
-                val mensagem = "Total Sementes: %.0f\nSementes/ha: %.0f\nPlantas/m²: %.2f\nKg/ha: %.3f"
-                    .format(semArea, sementesHa, popM2, kgha)
-
-                val dialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("Resultado")
-                    .setMessage(mensagem)
-                    .setPositiveButton("Fechar", null)
-                    .show()
-
-                dialog.findViewById<TextView>(com.google.android.material.R.id.alertTitle)?.apply {
-                    textSize = 22f
-                }
-                dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                    textSize = 18f
-                }
-
+                showResultadoDialog(
+                    totalSementes = semArea,
+                    sementesHa = sementesHa,
+                    plantasM2 = popM2,
+                    kgHa = kgha
+                )
             } else {
-                val dialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("Atenção")
-                    .setMessage("Preencha todos os campos corretamente.")
-                    .setPositiveButton("Ok", null)
-                    .show()
-
-                dialog.findViewById<TextView>(com.google.android.material.R.id.alertTitle)?.apply {
-                    textSize = 22f
-                }
-                dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                    textSize = 18f
-                }
-
+                showAtencaoDialog("Preencha todos os campos corretamente.")
             }
         }
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

@@ -9,8 +9,81 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.appbar.MaterialToolbar
+
+import android.app.Dialog
+import android.view.LayoutInflater
+import android.view.WindowManager
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 
 class RegSameadeiraActivity : AppCompatActivity() {
+
+    private fun showResultadoDialog(
+        coletaLinhaG: Double,
+        distanciaM: Double,
+        sementesPorMetro: Double,
+        kgHa: Double
+    ) {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_reg_samead, null, false)
+        dialog.setContentView(view)
+
+        // Fundo escurecido e sem bordas
+        dialog.window?.apply {
+            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setDimAmount(0.6f)
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        view.findViewById<TextView>(R.id.tvDialogTitle).text = "Resultado"
+        view.findViewById<TextView>(R.id.tvColeta).text = "Coleta por linha: %.2f g".format(coletaLinhaG)
+        view.findViewById<TextView>(R.id.tvDistancia).text = "Distância percorrida: %.2f m".format(distanciaM)
+        view.findViewById<TextView>(R.id.tvSementeMetro).text = "Sementes/m linear: %.1f".format(sementesPorMetro)
+        view.findViewById<TextView>(R.id.tvKgHa).text = "Kg/ha: %.3f".format(kgHa)
+
+        view.findViewById<Button>(R.id.btnDialogOk).setOnClickListener { dialog.dismiss() }
+
+        dialog.setCancelable(true)
+        dialog.show()
+    }
+
+    private fun showAtencaoDialog(mensagem: String) {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_reg_samead, null, false)
+        dialog.setContentView(view)
+
+        dialog.window?.apply {
+            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setDimAmount(0.6f)
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        view.findViewById<TextView>(R.id.tvDialogTitle).text = "Atenção"
+
+        val tvColeta = view.findViewById<TextView>(R.id.tvColeta)
+        val tvDistancia = view.findViewById<TextView>(R.id.tvDistancia)
+        val tvSementeMetro = view.findViewById<TextView>(R.id.tvSementeMetro)
+        val tvKgHa = view.findViewById<TextView>(R.id.tvKgHa)
+
+        tvColeta.text = mensagem
+        tvColeta.textSize = 18f
+        tvDistancia.visibility = android.view.View.GONE
+        tvSementeMetro.visibility = android.view.View.GONE
+        tvKgHa.visibility = android.view.View.GONE
+
+        val btnOk = view.findViewById<Button>(R.id.btnDialogOk)
+        btnOk.text = "Ok"
+        btnOk.setOnClickListener { dialog.dismiss() }
+
+        dialog.setCancelable(true)
+        dialog.show()
+    }
+
 
     private  lateinit  var btnCalRegSame: Button
     private  lateinit  var editEspLinha: EditText
@@ -24,6 +97,20 @@ class RegSameadeiraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_reg_sameadeira)
+
+// ToolBar
+        window.statusBarColor = getColor(R.color.Verde)
+        val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
+        toolbar.setTitleTextAppearance(this, R.style.TitleLarge_Custom)
+        toolbar.setNavigationIconTint(ContextCompat.getColor(this, R.color.white))
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            title = "Calcular Regulagem da Semeadora"
+            setDisplayHomeAsUpEnabled(true) // mostra o botão de voltar
+            setHomeButtonEnabled(true)
+        }
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
 
         btnCalRegSame = findViewById(R.id.btn_CalRegSame)
         editEspLinha = findViewById(R.id.edit_EspLinha)
@@ -57,7 +144,27 @@ class RegSameadeiraActivity : AppCompatActivity() {
 
                 val QuiloHa = (SemLine * PMS) / espLinhaCm
 
-                val mensagem = "Coleta/linha: %.2fg\nDistância: %.2fm\nGrão/m: %.1f\nKg/ha: %.3f"
+                showResultadoDialog(
+                    coletaLinhaG = gColeta,
+                    distanciaM = distPercorM,
+                    sementesPorMetro = semPorMLin,
+                    kgHa = QuiloHa
+                )
+            } else {
+                showAtencaoDialog("Preencha todos os campos corretamente.")
+            }
+        }
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+}
+
+    /* val mensagem = "Coleta/linha: %.2fg\nDistância: %.2fm\nGrão/m: %.1f\nKg/ha: %.3f"
                     .format(gColeta, distPercorM, semPorMLin, QuiloHa)
 
                 val dialog = MaterialAlertDialogBuilder(this)
@@ -87,14 +194,4 @@ class RegSameadeiraActivity : AppCompatActivity() {
                     textSize = 18f
                 }
 
-            }
-        }
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
-}
+            } */

@@ -8,58 +8,12 @@
     android:background="@drawable/fundo_sementes"
     tools:context=".SementesActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Calcular População de Plantas"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!--
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputNSemBag"
-        android:layout_width="370dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:textColorHint="@color/white"
-        app:boxBackgroundColor="@color/Cinza"
-        app:boxStrokeColor="@color/Verde"
-        app:cursorColor="@color/white"
-        app:hintTextColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputPMS">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_NSemBag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Núm. Sement. Saco ex: 60000 (Opcional)"
-            android:inputType="number|numberDecimal"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textColorLink="@color/Verde"
-            android:textSize="16sp"
-            android:visibility="visible" />
-    </com.google.android.material.textfield.TextInputLayout> -->
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputArea"
         android:layout_width="370dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:textColorHint="@color/white"
@@ -90,7 +44,6 @@
         android:layout_width="370dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:textColorHint="@color/white"
@@ -121,7 +74,6 @@
         android:layout_width="370dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:textColorHint="@color/white"
@@ -153,7 +105,6 @@
         android:layout_width="370dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:textColorHint="@color/white"
@@ -184,7 +135,7 @@
         android:layout_width="370dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:textColorHint="@color/white"
@@ -195,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_PopLinSem"
@@ -215,11 +166,56 @@
         style="@style/BotaoAgro"
         android:layout_width="230dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="Calcular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputArea" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/Verde"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--
+   <com.google.android.material.textfield.TextInputLayout
+       android:id="@+id/textInputNSemBag"
+       android:layout_width="370dp"
+       android:layout_height="80dp"
+       android:layout_marginStart="16dp"
+       android:layout_marginEnd="16dp"
+       android:padding="8dp"
+       android:textColorHint="@color/white"
+       app:boxBackgroundColor="@color/Cinza"
+       app:boxStrokeColor="@color/Verde"
+       app:cursorColor="@color/white"
+       app:hintTextColor="@color/white"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.5"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textInputPMS">
+
+       <com.google.android.material.textfield.TextInputEditText
+           android:id="@+id/edit_NSemBag"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:hint="Núm. Sement. Saco ex: 60000 (Opcional)"
+           android:inputType="number|numberDecimal"
+           android:textColor="@color/white"
+           android:textColorHint="@color/white"
+           android:textColorLink="@color/Verde"
+           android:textSize="16sp"
+           android:visibility="visible" />
+   </com.google.android.material.textfield.TextInputLayout> -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

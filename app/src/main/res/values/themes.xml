@@ -3,6 +3,14 @@
     <style name="Base.Theme.AgroCalculo" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/Verde</item>
+        <item name="android:windowLightStatusBar">false</item> <!-- ícones claros -->
+    </style>
+
+    <style name="TitleLarge_Custom" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="BotaoAgro" parent="Widget.MaterialComponents.Button">
