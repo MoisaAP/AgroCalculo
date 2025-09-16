@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.moisespellegrin.agrocalculo"
     compileSdk = 36
 
@@ -27,6 +28,7 @@ android {
         }
     }
     compileOptions {
+
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -45,4 +47,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }

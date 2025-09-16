@@ -17,6 +17,11 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 
+import com.moisespellegrin.agrocalculo.database.DataBaseHelper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 class PmsActivity : AppCompatActivity() {
 
     private fun showCustomDialog(title: String, message: String, buttonText: String = "Fechar") {
@@ -52,11 +57,14 @@ class PmsActivity : AppCompatActivity() {
     private  lateinit  var btnCalcPMS: Button
     private  lateinit  var editQtdSementes: EditText
     private  lateinit  var editPesoSementes: EditText
+    private lateinit var db: DataBaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_pms)
+
+        db = DataBaseHelper(this)
 
         // ToolBar
         window.statusBarColor = getColor(R.color.Verde)
@@ -84,6 +92,12 @@ class PmsActivity : AppCompatActivity() {
             if (QtdSementes != null && PesoSementes != null) {
 
                 val PMS = (1000.0 * PesoSementes) / QtdSementes
+
+                // Salvar histórico: entrada, resultado e data/hora
+                val nowIso = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
+
+                // SALVAR no banco
+                db.inserirHistorico(QtdSementes, PesoSementes, PMS, nowIso)
 
                 val mensagem = "PMS: %.2fg".format(PMS)
                 showCustomDialog(title = "Resultado", message = mensagem, buttonText = "Fechar")

@@ -32,6 +32,8 @@ class HomeActivity : AppCompatActivity() {
         val btnSementes = findViewById<Button>(R.id.btn_sementes)
         val btnFertilizantes = findViewById<Button>(R.id.btn_pms)
         val btnRegSameadeira = findViewById<Button>(R.id.btn_reg_sameadeira)
+        val btnHistorico = findViewById<Button>(R.id.btn_calc_salvos)
+
         // Ação do botão sementes
         btnSementes.setOnClickListener {
             val intent = Intent(this, SementesActivity::class.java)
@@ -45,6 +47,11 @@ class HomeActivity : AppCompatActivity() {
         // Ação do botão regulagem da Semeadora
         btnRegSameadeira.setOnClickListener {
             val intent = Intent(this, RegSameadeiraActivity::class.java)
+            startActivity(intent)
+        }
+        // Ação do botão histórico
+        btnHistorico.setOnClickListener {
+            val intent = Intent(this, HistoricoActivity::class.java)
             startActivity(intent)
         }
 
