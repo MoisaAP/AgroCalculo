@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:background="@color/Verde"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white" />
 
     <ScrollView
         android:id="@+id/scroll"
@@ -38,11 +38,27 @@
             android:padding="16dp">
 
             <LinearLayout
-                android:id="@+id/listPms"
+                android:id="@+id/listGeral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+
         </LinearLayout>
+
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/btn_deletHist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/Verde"
+        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.466"
+        app:srcCompat="@drawable/icon_trash" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

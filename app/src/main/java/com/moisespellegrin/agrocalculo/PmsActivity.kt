@@ -59,12 +59,15 @@ class PmsActivity : AppCompatActivity() {
     private  lateinit  var editPesoSementes: EditText
     private lateinit var db: DataBaseHelper
 
+    private fun nowIso(): String =
+        java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.getDefault())
+            .format(java.util.Date())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_pms)
 
-        db = DataBaseHelper(this)
 
         // ToolBar
         window.statusBarColor = getColor(R.color.Verde)
@@ -79,6 +82,7 @@ class PmsActivity : AppCompatActivity() {
         }
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
+        db = DataBaseHelper(this)
 
         btnCalcPMS = findViewById(R.id.btn_CalcPMS)
         editQtdSementes = findViewById(R.id.edit_QtdSementes)
@@ -93,11 +97,10 @@ class PmsActivity : AppCompatActivity() {
 
                 val PMS = (1000.0 * PesoSementes) / QtdSementes
 
-                // Salvar histórico: entrada, resultado e data/hora
-                val nowIso = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
+                val linha = "PMS:\nQuantidade: %.0f\nPeso: %.2fg\nResultado: %.2fg"
+                    .format(QtdSementes, PesoSementes, PMS)
 
-                // SALVAR no banco
-                db.inserirHistorico(QtdSementes, PesoSementes, PMS, nowIso)
+                db.inserirHistoricoGeral("PMS", linha, nowIso())
 
                 val mensagem = "PMS: %.2fg".format(PMS)
                 showCustomDialog(title = "Resultado", message = mensagem, buttonText = "Fechar")

@@ -16,6 +16,7 @@ import android.view.WindowManager
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
+import com.moisespellegrin.agrocalculo.database.DataBaseHelper
 
 class SementesActivity : AppCompatActivity() {
 
@@ -90,6 +91,11 @@ class SementesActivity : AppCompatActivity() {
     private lateinit var editPodGermi: EditText
     private lateinit var editPMS: EditText
     private lateinit var editArea: EditText
+    private lateinit var db: DataBaseHelper
+
+    private fun nowIso(): String =
+        java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.getDefault())
+            .format(java.util.Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,6 +115,7 @@ class SementesActivity : AppCompatActivity() {
         }
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
+        db = DataBaseHelper(this)
 
         btnCalPopPlanta = findViewById(R.id.btn_CalPopPlanta)
         editPopLinSem = findViewById(R.id.edit_PopLinSem)
@@ -136,6 +143,10 @@ class SementesActivity : AppCompatActivity() {
 
                 val semArea = sementesHa * area
 
+                val linha = "Sementes:\nPop/m²: %.2f\nSementes/ha: %.0f\nKg/ha: %.2f\nSementes área: %.0f"
+                    .format(popM2, sementesHa, kgha, semArea)
+
+                db.inserirHistoricoGeral("SEMENTES", linha, nowIso())
 
                 showResultadoDialog(
                     totalSementes = semArea,

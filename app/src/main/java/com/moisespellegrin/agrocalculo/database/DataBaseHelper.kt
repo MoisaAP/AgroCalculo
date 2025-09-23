@@ -8,77 +8,72 @@ import android.database.sqlite.SQLiteOpenHelper
 private const val DB_NAME = "agrocalc.db"
 private const val DB_VERSION = 1
 
-private const val TABLE_HIST = "historico_pms"
-private const val COL_ID = "_id"
-private const val COL_QTD = "qtd_sementes"
-private const val COL_PESO = "peso_sementes"
-private const val COL_RESULT = "pms_result"
-private const val COL_TIMESTAMP = "created_at" // ISO-8601 string
+// Tabela de histórico unificado
+private const val TABLE_HIST_ALL = "historico_geral"
+private const val ALL_ID = "_id"
+private const val ALL_TIPO = "tipo"            // "PMS" | "SEMENTES" | "SEMEADEIRA"
+private const val ALL_MSG = "mensagem"         // texto pronto para exibir
+private const val ALL_TIMESTAMP = "created_at" // ISO-8601 "yyyy-MM-dd'T'HH:mm:ss"
 
-class DataBaseHelper(context: Context) :
-    SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTable = """
-            CREATE TABLE $TABLE_HIST (
-                $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                $COL_QTD REAL NOT NULL,
-                $COL_PESO REAL NOT NULL,
-                $COL_RESULT REAL NOT NULL,
-                $COL_TIMESTAMP TEXT NOT NULL
+        val createAll = """
+            CREATE TABLE $TABLE_HIST_ALL (
+                $ALL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $ALL_TIPO TEXT NOT NULL,
+                $ALL_MSG TEXT NOT NULL,
+                $ALL_TIMESTAMP TEXT NOT NULL
             );
         """.trimIndent()
-        db.execSQL(createTable)
-
-        // Índices para consultas ordenadas/filtradas
-        db.execSQL("CREATE INDEX idx_hist_created_at ON $TABLE_HIST($COL_TIMESTAMP DESC)")
+        db.execSQL(createAll)
+        db.execSQL("CREATE INDEX idx_all_created_at ON $TABLE_HIST_ALL($ALL_TIMESTAMP DESC)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // migração
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_HIST")
+        // Como estamos começando do zero, estratégia simples:
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_HIST_ALL")
         onCreate(db)
     }
 
-    fun inserirHistorico(qtd: Double, peso: Double, resultado: Double, timestampIso: String): Long {
-        val values = ContentValues().apply {
-            put(COL_QTD, qtd)
-            put(COL_PESO, peso)
-            put(COL_RESULT, resultado)
-            put(COL_TIMESTAMP, timestampIso)
+    // CRUD mínimo para timeline
+    fun inserirHistoricoGeral(tipo: String, mensagem: String, timestampIso: String): Long {
+        val cv = ContentValues().apply {
+            put(ALL_TIPO, tipo)
+            put(ALL_MSG, mensagem)
+            put(ALL_TIMESTAMP, timestampIso)
         }
-        return writableDatabase.insert(TABLE_HIST, null, values)
+        return writableDatabase.insert(TABLE_HIST_ALL, null, cv)
     }
 
-    fun listarHistorico(): List<HistoricoPms> {
-        val items = mutableListOf<HistoricoPms>()
-        val cols = arrayOf(COL_ID, COL_QTD, COL_PESO, COL_RESULT, COL_TIMESTAMP)
-        val c = readableDatabase.query(
-            TABLE_HIST, cols,
-            null, null, null, null,
-            "$COL_TIMESTAMP DESC"
-        )
-        c.use {
-            while (it.moveToNext()) {
+    fun listarHistoricoGeral(): List<HistoricoGeral> {
+        val items = mutableListOf<HistoricoGeral>()
+        val cols = arrayOf(ALL_ID, ALL_TIPO, ALL_MSG, ALL_TIMESTAMP)
+        readableDatabase.query(
+            TABLE_HIST_ALL, cols, null, null, null, null, "$ALL_TIMESTAMP DESC"
+        ).use { c ->
+            while (c.moveToNext()) {
                 items.add(
-                    HistoricoPms(
-                        id = it.getLong(it.getColumnIndexOrThrow(COL_ID)),
-                        qtd = it.getDouble(it.getColumnIndexOrThrow(COL_QTD)),
-                        peso = it.getDouble(it.getColumnIndexOrThrow(COL_PESO)),
-                        resultado = it.getDouble(it.getColumnIndexOrThrow(COL_RESULT)),
-                        createdAt = it.getString(it.getColumnIndexOrThrow(COL_TIMESTAMP))
+                    HistoricoGeral(
+                        id = c.getLong(c.getColumnIndexOrThrow(ALL_ID)),
+                        tipo = c.getString(c.getColumnIndexOrThrow(ALL_TIPO)),
+                        mensagem = c.getString(c.getColumnIndexOrThrow(ALL_MSG)),
+                        createdAt = c.getString(c.getColumnIndexOrThrow(ALL_TIMESTAMP))
                     )
                 )
             }
         }
         return items
     }
+
+    fun deletarTodoHistoricoGeral(): Int {
+        return writableDatabase.delete(TABLE_HIST_ALL, null, null)
+    }
 }
 
-data class HistoricoPms(
+data class HistoricoGeral(
     val id: Long,
-    val qtd: Double,
-    val peso: Double,
-    val resultado: Double,
+    val tipo: String,
+    val mensagem: String,
     val createdAt: String
 )

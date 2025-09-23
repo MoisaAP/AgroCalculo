@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import com.moisespellegrin.agrocalculo.database.DataBaseHelper
 
 class RegSameadeiraActivity : AppCompatActivity() {
 
@@ -92,6 +93,11 @@ class RegSameadeiraActivity : AppCompatActivity() {
     private  lateinit  var editKgHa: EditText
     private  lateinit  var editSemLine: EditText
     private  lateinit  var editQtdVoltas: EditText
+    private lateinit var db: DataBaseHelper
+
+    private fun nowIso(): String =
+        java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.getDefault())
+            .format(java.util.Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +117,7 @@ class RegSameadeiraActivity : AppCompatActivity() {
         }
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
+        db = DataBaseHelper(this)
 
         btnCalRegSame = findViewById(R.id.btn_CalRegSame)
         editEspLinha = findViewById(R.id.edit_EspLinha)
@@ -119,6 +126,7 @@ class RegSameadeiraActivity : AppCompatActivity() {
         editKgHa = findViewById(R.id.edit_KgHa)
         editSemLine = findViewById(R.id.edit_SemLine)
         editQtdVoltas = findViewById(R.id.edit_QtdVoltas)
+
 
         btnCalRegSame.setOnClickListener {
             val espLinhaCm = editEspLinha.text.toString().toDoubleOrNull()
@@ -143,6 +151,11 @@ class RegSameadeiraActivity : AppCompatActivity() {
                 val semPorMLin = (KgHa * espLinhaCm) / PMS
 
                 val QuiloHa = (SemLine * PMS) / espLinhaCm
+
+                val linha = "Regulagem:\nColeta: %.1f\nDistancia: %.1f\nSemente p/m: %.1f\nKg/ha: %.3f"
+                    .format(gColeta, distPercorM, semPorMLin, QuiloHa)
+
+                db.inserirHistoricoGeral("SEMEADEIRA", linha, nowIso())
 
                 showResultadoDialog(
                     coletaLinhaG = gColeta,
