@@ -129,25 +129,41 @@ class RegSameadeiraActivity : AppCompatActivity() {
             val espLinhaCm = editEspLinha.text.toString().toDoubleOrNull()
             val circRodaM = editCircRoda.text.toString().toDoubleOrNull()
             val PMS = editPMS.text.toString().toDoubleOrNull()
-            val KgHa = editKgHa.text.toString().toDoubleOrNull() ?: 0.0
+            var KgHa = editKgHa.text.toString().toDoubleOrNull() ?: 0.0
             val SemLine = editSemLine.text.toString().toDoubleOrNull() ?: 0.0
             val qtdVoltas = editQtdVoltas.text.toString().toDoubleOrNull()
 
             if (espLinhaCm != null && circRodaM != null && PMS != null && qtdVoltas != null) {
 
+                var QuiloHa = (SemLine * PMS) / espLinhaCm
+
+                if (KgHa == 0.0) {
+                    KgHa = QuiloHa
+                }
+
                 val espLinhaM = espLinhaCm / 100.0
 
                 val distPercorM = circRodaM * qtdVoltas
 
-                val gPorM2 = (KgHa * 1000.0) / 10_000.0
+                var gPorM2 = 0.0
+                var semPorMLin = 0.0
+                if (KgHa > 0 && QuiloHa > 0) {
+                    gPorM2 = (QuiloHa * 1000.0) / 10_000.0
+                    semPorMLin = (QuiloHa * espLinhaCm) / PMS
+                } else {
+                    gPorM2 = (KgHa * 1000.0) / 10_000.0
+                    semPorMLin = (KgHa * espLinhaCm) / PMS
+                }
 
                 val gMetroLinear = gPorM2 * espLinhaM
 
                 val gColeta = gMetroLinear * distPercorM
 
-                val semPorMLin = (KgHa * espLinhaCm) / PMS
 
-                val QuiloHa = (SemLine * PMS) / espLinhaCm
+
+                if (QuiloHa == 0.0) {
+                    QuiloHa = KgHa
+                }
 
                 val linha = "Regulagem:\nColeta: %.1f\nDistancia: %.1f\nSemente p/m: %.1f\nKg/ha: %.3f"
                     .format(gColeta, distPercorM, semPorMLin, QuiloHa)
