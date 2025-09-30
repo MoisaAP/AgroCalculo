@@ -23,14 +23,14 @@ class HomeActivity : AppCompatActivity() {
         toolbar.setNavigationIconTint(ContextCompat.getColor(this, R.color.white))
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
-            title = "AgroCalculo"
+            title = "AgroCálculo"
             setDisplayHomeAsUpEnabled(true) // mostra o botão de voltar
             setHomeButtonEnabled(true)
         }
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         val btnSementes = findViewById<Button>(R.id.btn_sementes)
-        val btnFertilizantes = findViewById<Button>(R.id.btn_pms)
+        val btnPMS = findViewById<Button>(R.id.btn_pms)
         val btnRegSameadeira = findViewById<Button>(R.id.btn_reg_sameadeira)
         val btnHistorico = findViewById<Button>(R.id.btn_calc_salvos)
 
@@ -38,21 +38,25 @@ class HomeActivity : AppCompatActivity() {
         btnSementes.setOnClickListener {
             val intent = Intent(this, SementesActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
         // Ação do botão fertilizantes
-        btnFertilizantes.setOnClickListener {
+        btnPMS.setOnClickListener {
             val intent = Intent(this, PmsActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
         // Ação do botão regulagem da Semeadora
         btnRegSameadeira.setOnClickListener {
             val intent = Intent(this, RegSameadeiraActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
         // Ação do botão histórico
         btnHistorico.setOnClickListener {
             val intent = Intent(this, HistoricoActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
 
 

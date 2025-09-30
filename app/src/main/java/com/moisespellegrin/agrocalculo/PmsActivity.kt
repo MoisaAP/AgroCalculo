@@ -8,19 +8,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.WindowManager
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 
 import com.moisespellegrin.agrocalculo.database.DataBaseHelper
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+
 
 class PmsActivity : AppCompatActivity() {
 
@@ -104,6 +100,9 @@ class PmsActivity : AppCompatActivity() {
 
                 val mensagem = "PMS: %.2fg".format(PMS)
                 showCustomDialog(title = "Resultado", message = mensagem, buttonText = "Fechar")
+
+                startActivity(intent)
+
             } else {
                 showCustomDialog(title = "Atenção", message = "Preencha todos os campos corretamente.", buttonText = "Ok")
             }

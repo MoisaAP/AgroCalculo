@@ -15,8 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.moisespellegrin.agrocalculo.database.DataBaseHelper
-import java.text.SimpleDateFormat
-import java.util.Locale
+
 
 
 class HistoricoActivity : AppCompatActivity() {
@@ -48,7 +47,7 @@ class HistoricoActivity : AppCompatActivity() {
             val txt = v.findViewById<TextView>(R.id.txtConteudo)
             val dataBonita = try { outFmt.format(inFmt.parse(h.createdAt)!!) } catch (_: Exception) { h.createdAt }
 
-            txt.text = "${h.mensagem}\nData: $dataBonita"
+            txt.text = "$dataBonita\n${h.mensagem}"
             txt.setTextColor(android.graphics.Color.WHITE)
 
             list.addView(v)

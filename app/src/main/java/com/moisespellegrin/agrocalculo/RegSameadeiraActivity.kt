@@ -8,13 +8,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.appbar.MaterialToolbar
 
 import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.WindowManager
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.moisespellegrin.agrocalculo.database.DataBaseHelper
 
@@ -30,7 +28,7 @@ class RegSameadeiraActivity : AppCompatActivity() {
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_reg_samead, null, false)
         dialog.setContentView(view)
 
-        // Fundo escurecido e sem bordas
+        // Fundo
         dialog.window?.apply {
             setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
             clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -85,7 +83,6 @@ class RegSameadeiraActivity : AppCompatActivity() {
         dialog.show()
     }
 
-
     private  lateinit  var btnCalRegSame: Button
     private  lateinit  var editEspLinha: EditText
     private  lateinit  var editCircRoda: EditText
@@ -104,7 +101,7 @@ class RegSameadeiraActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_reg_sameadeira)
 
-// ToolBar
+        // ToolBar
         window.statusBarColor = getColor(R.color.Verde)
         val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
         toolbar.setTitleTextAppearance(this, R.style.TitleLarge_Custom)
@@ -168,7 +165,6 @@ class RegSameadeiraActivity : AppCompatActivity() {
             }
         }
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -176,35 +172,3 @@ class RegSameadeiraActivity : AppCompatActivity() {
         }
     }
 }
-
-    /* val mensagem = "Coleta/linha: %.2fg\nDistância: %.2fm\nGrão/m: %.1f\nKg/ha: %.3f"
-                    .format(gColeta, distPercorM, semPorMLin, QuiloHa)
-
-                val dialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("Resultado")
-                    .setMessage(mensagem)
-                    .setPositiveButton("Fechar", null)
-                    .show()
-
-                dialog.findViewById<TextView>(com.google.android.material.R.id.alertTitle)?.apply {
-                    textSize = 22f
-                }
-                dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                    textSize = 18f
-                }
-
-            } else {
-                val dialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("Atenção")
-                    .setMessage("Preencha todos os campos corretamente.")
-                    .setPositiveButton("Ok", null)
-                    .show()
-
-                dialog.findViewById<TextView>(com.google.android.material.R.id.alertTitle)?.apply {
-                    textSize = 22f
-                }
-                dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                    textSize = 18f
-                }
-
-            } */
