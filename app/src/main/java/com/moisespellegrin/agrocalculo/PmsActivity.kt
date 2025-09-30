@@ -64,7 +64,6 @@ class PmsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_pms)
 
-
         // ToolBar
         window.statusBarColor = getColor(R.color.Verde)
         val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
@@ -100,8 +99,6 @@ class PmsActivity : AppCompatActivity() {
 
                 val mensagem = "PMS: %.2fg".format(PMS)
                 showCustomDialog(title = "Resultado", message = mensagem, buttonText = "Fechar")
-
-                startActivity(intent)
 
             } else {
                 showCustomDialog(title = "Atenção", message = "Preencha todos os campos corretamente.", buttonText = "Ok")
