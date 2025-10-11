@@ -92,7 +92,7 @@ class PmsActivity : AppCompatActivity() {
 
                 val PMS = (1000.0 * PesoSementes) / QtdSementes
 
-                val linha = "PMS:\nQuantidade: %.0f\nPeso: %.2fg\nResultado: %.2fg"
+                val linha = "\nQuantidade: %.0f\nPeso: %.2fg\nResultado: %.2fg"
                     .format(QtdSementes, PesoSementes, PMS)
 
                 db.inserirHistoricoGeral("PMS", linha, nowIso())

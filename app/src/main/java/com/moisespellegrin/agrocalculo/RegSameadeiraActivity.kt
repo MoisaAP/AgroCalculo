@@ -159,16 +159,14 @@ class RegSameadeiraActivity : AppCompatActivity() {
 
                 val gColeta = gMetroLinear * distPercorM
 
-
-
                 if (QuiloHa == 0.0) {
                     QuiloHa = KgHa
                 }
 
-                val linha = "Regulagem:\nColeta: %.1f\nDistancia: %.1f\nSemente p/m: %.1f\nKg/ha: %.3f"
+                val linha = "\nColeta: %.1f\nDistancia: %.1f\nSemente p/m: %.1f\nKg/ha: %.3f"
                     .format(gColeta, distPercorM, semPorMLin, QuiloHa)
 
-                db.inserirHistoricoGeral("SEMEADEIRA", linha, nowIso())
+                db.inserirHistoricoGeral("REGULAGEM SEMEADEIRA", linha, nowIso())
 
                 showResultadoDialog(
                     coletaLinhaG = gColeta,

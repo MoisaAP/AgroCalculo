@@ -143,10 +143,10 @@ class SementesActivity : AppCompatActivity() {
 
                 val semArea = sementesHa * area
 
-                val linha = "Sementes:\nPop/m²: %.2f\nSementes/ha: %.0f\nKg/ha: %.2f\nSementes área: %.0f"
+                val linha = "\nPop/m²: %.2f\nSementes/ha: %.0f\nKg/ha: %.2f\nSementes área: %.0f"
                     .format(popM2, sementesHa, kgha, semArea)
 
-                db.inserirHistoricoGeral("SEMENTES", linha, nowIso())
+                db.inserirHistoricoGeral("POPULAÇÂO PLANTAS", linha, nowIso())
 
                 showResultadoDialog(
                     totalSementes = semArea,

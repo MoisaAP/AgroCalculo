@@ -11,8 +11,8 @@ private const val DB_VERSION = 1
 // Tabela de histórico unificado
 private const val TABLE_HIST_ALL = "historico_geral"
 private const val ALL_ID = "_id"
-private const val ALL_TIPO = "tipo"            // "PMS" | "SEMENTES" | "SEMEADEIRA"
-private const val ALL_MSG = "mensagem"         // texto pronto para exibir
+private const val ALL_TIPO = "tipo"
+private const val ALL_MSG = "mensagem"
 private const val ALL_TIMESTAMP = "created_at" // ISO-8601 "yyyy-MM-dd'T'HH:mm:ss"
 
 class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
@@ -51,6 +51,44 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val cols = arrayOf(ALL_ID, ALL_TIPO, ALL_MSG, ALL_TIMESTAMP)
         readableDatabase.query(
             TABLE_HIST_ALL, cols, null, null, null, null, "$ALL_TIMESTAMP DESC"
+        ).use { c ->
+            while (c.moveToNext()) {
+                items.add(
+                    HistoricoGeral(
+                        id = c.getLong(c.getColumnIndexOrThrow(ALL_ID)),
+                        tipo = c.getString(c.getColumnIndexOrThrow(ALL_TIPO)),
+                        mensagem = c.getString(c.getColumnIndexOrThrow(ALL_MSG)),
+                        createdAt = c.getString(c.getColumnIndexOrThrow(ALL_TIMESTAMP))
+                    )
+                )
+            }
+        }
+        return items
+    }
+
+    fun listarHistoricoGeralFiltrado(tipo: String?): List<HistoricoGeral> {
+        val items = mutableListOf<HistoricoGeral>()
+        val cols = arrayOf(ALL_ID, ALL_TIPO, ALL_MSG, ALL_TIMESTAMP)
+
+        val selection: String?
+        val selectionArgs: Array<String>?
+
+        if (tipo.isNullOrEmpty() || tipo.equals("Todos", ignoreCase = true)) {
+            selection = null
+            selectionArgs = null
+        } else {
+            selection = "$ALL_TIPO = ?"
+            selectionArgs = arrayOf(tipo)
+        }
+
+        readableDatabase.query(
+            TABLE_HIST_ALL,
+            cols,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "$ALL_TIMESTAMP DESC"
         ).use { c ->
             while (c.moveToNext()) {
                 items.add(

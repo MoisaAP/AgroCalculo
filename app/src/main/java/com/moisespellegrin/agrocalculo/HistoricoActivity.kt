@@ -1,6 +1,9 @@
 package com.moisespellegrin.agrocalculo
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,12 +24,15 @@ import com.moisespellegrin.agrocalculo.database.DataBaseHelper
 class HistoricoActivity : AppCompatActivity() {
 
     private lateinit var db: DataBaseHelper
+    private var filtroTipoAtual: String? = null // null ou "Todos" = sem filtro
 
     private fun preencherHistoricoGeral() {
         val list = findViewById<LinearLayout>(R.id.listGeral)
         list.removeAllViews()
 
-        val historico = db.listarHistoricoGeral()
+        val historico = db.listarHistoricoGeralFiltrado(
+            if (filtroTipoAtual.isNullOrEmpty()) null else filtroTipoAtual
+        )
 
         val inFmt = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.getDefault())
         val outFmt = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
@@ -47,8 +53,22 @@ class HistoricoActivity : AppCompatActivity() {
             val txt = v.findViewById<TextView>(R.id.txtConteudo)
             val dataBonita = try { outFmt.format(inFmt.parse(h.createdAt)!!) } catch (_: Exception) { h.createdAt }
 
-            txt.text = "$dataBonita\n${h.mensagem}"
-            txt.setTextColor(android.graphics.Color.WHITE)
+
+            txt.setTextColor(ContextCompat.getColor(this, R.color.Verde))
+
+            val full = "[${h.tipo}]\n$dataBonita${h.mensagem}"
+            val sb = SpannableStringBuilder(full)
+
+            val inicioMsg = full.indexOf(h.mensagem)
+            if (inicioMsg >= 0) {
+                sb.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(this, R.color.white)), // cor da mensagem
+                    inicioMsg,
+                    inicioMsg + h.mensagem.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            txt.text = sb
 
             list.addView(v)
         }
@@ -75,6 +95,29 @@ class HistoricoActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         preencherHistoricoGeral()
+
+        val btnFilter = findViewById<ImageButton>(R.id.btn_filterHist)
+        btnFilter.setOnClickListener {
+            val opcoes = arrayOf("Todos", "PMS", "REGULAGEM SEMEADEIRA", "POPULAÇÂO PLANTAS")
+
+            val posAtual = opcoes.indexOfFirst { it.equals(filtroTipoAtual ?: "Todos", ignoreCase = true) }
+                .let { if (it >= 0) it else 0 }
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Filtrar por")
+                .setSingleChoiceItems(opcoes, posAtual) { _, which ->
+                    filtroTipoAtual = if (which == 0) null else opcoes[which]
+                }
+                .setPositiveButton("Aplicar") { _, _ ->
+                    preencherHistoricoGeral()
+                }
+                .setNegativeButton("Cancelar", null)
+                .setNeutralButton("Limpar filtro") { _, _ ->
+                    filtroTipoAtual = null
+                    preencherHistoricoGeral()
+                }
+                .show()
+        }
 
 
         val btnDelete = findViewById<ImageButton>(R.id.btn_deletHist)
