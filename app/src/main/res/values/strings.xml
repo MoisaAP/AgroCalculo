@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AgroCálculo</string>
+    <string name="descricao_botao_feedback">Envie uma avaliação</string>
 </resources>
