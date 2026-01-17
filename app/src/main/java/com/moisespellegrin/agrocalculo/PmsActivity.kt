@@ -14,7 +14,7 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
-
+import com.moisespellegrin.agrocalculo.utils.toDoubleBR
 import com.moisespellegrin.agrocalculo.database.DataBaseHelper
 
 
@@ -91,6 +91,12 @@ class PmsActivity : AppCompatActivity() {
             if (QtdSementes != null && PesoSementes != null) {
 
                 val PMS = (1000.0 * PesoSementes) / QtdSementes
+
+                // Salvar PMS para uso global
+                val prefs = getSharedPreferences("AgroCalculoPrefs", MODE_PRIVATE)
+                prefs.edit()
+                    .putFloat("PMS_ATUAL", PMS.toFloat())
+                    .apply()
 
                 val linha = "\nQuantidade: %.0f\nPeso: %.2fg\nResultado: %.2fg"
                     .format(QtdSementes, PesoSementes, PMS)

@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.moisespellegrin.agrocalculo.database.DataBaseHelper
+import com.moisespellegrin.agrocalculo.utils.toDoubleBR
 
 class SementesActivity : AppCompatActivity() {
 
@@ -117,6 +118,7 @@ class SementesActivity : AppCompatActivity() {
 
         db = DataBaseHelper(this)
 
+
         btnCalPopPlanta = findViewById(R.id.btn_CalPopPlanta)
         editPopLinSem = findViewById(R.id.edit_PopLinSem)
         editEspLinha = findViewById(R.id.edit_EspLinha)
@@ -124,11 +126,20 @@ class SementesActivity : AppCompatActivity() {
         editPMS = findViewById(R.id.edit_PMS)
         editArea = findViewById(R.id.edit_Area)
 
+        // Carrega PMS Global
+        val prefs = getSharedPreferences("AgroCalculoPrefs", MODE_PRIVATE)
+        val pmsSalvo = prefs.getFloat("PMS_ATUAL", 0f)
+
+        if (pmsSalvo > 0) {
+            editPMS.setText(String.format("%.2f", pmsSalvo))
+        }
+
         btnCalPopPlanta.setOnClickListener {
+
             val popLinSem = editPopLinSem.text.toString().toDoubleOrNull()
             val espLinhaCm = editEspLinha.text.toString().toDoubleOrNull()
             var podGermi = editPodGermi.text.toString().toDoubleOrNull() ?: 100.0
-            val PMS = editPMS.text.toString().toDoubleOrNull() ?: 0.0
+            val PMS = editPMS.text.toString().toDoubleBR() ?: 0.0
             val area = editArea.text.toString().toDoubleOrNull() ?: 0.0
 
             if (popLinSem != null && espLinhaCm != null) {

@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.moisespellegrin.agrocalculo.database.DataBaseHelper
+import com.moisespellegrin.agrocalculo.utils.toDoubleBR
 
 class RegSameadeiraActivity : AppCompatActivity() {
 
@@ -124,11 +125,19 @@ class RegSameadeiraActivity : AppCompatActivity() {
         editSemLine = findViewById(R.id.edit_SemLine)
         editQtdVoltas = findViewById(R.id.edit_QtdVoltas)
 
+        // Carrega PMS Global
+        val prefs = getSharedPreferences("AgroCalculoPrefs", MODE_PRIVATE)
+        val pmsSalvo = prefs.getFloat("PMS_ATUAL", 0f)
+
+        if (pmsSalvo > 0) {
+            editPMS.setText(String.format("%.2f", pmsSalvo))
+        }
 
         btnCalRegSame.setOnClickListener {
+
             val espLinhaCm = editEspLinha.text.toString().toDoubleOrNull()
             val circRodaM = editCircRoda.text.toString().toDoubleOrNull()
-            val PMS = editPMS.text.toString().toDoubleOrNull()
+            val PMS = editPMS.text.toString().toDoubleBR()
             var KgHa = editKgHa.text.toString().toDoubleOrNull() ?: 0.0
             val SemLine = editSemLine.text.toString().toDoubleOrNull() ?: 0.0
             val qtdVoltas = editQtdVoltas.text.toString().toDoubleOrNull()
